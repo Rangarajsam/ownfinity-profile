@@ -1,10 +1,10 @@
 const packageJsonCommon = require('../package.json');
 
 const moduleFederationConfig = {
-    name:'wishlist',
+    name:'profile',
     filename:'remoteEntry.js',
     exposes:{
-        './WishlistApp':'./src/bootstrap.tsx'
+        './ProfileApp':'./src/bootstrap.tsx'
     },
     remotes:{
         container:'container@http://localhost:2000/remoteEntry.js'
