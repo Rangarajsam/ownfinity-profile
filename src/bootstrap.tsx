@@ -7,12 +7,24 @@ import App from "./App";
 let root: Root | null = null;
 
 const mount = (el: HTMLElement): void => {
+  // Unmount any existing root first to avoid conflicts
+  if (root) {
+    root.unmount();
+  }
+  
   root = createRoot(el);
   root.render(
     <StrictMode>
       <App />
     </StrictMode>
   );
+};
+
+const unmount = (el: HTMLElement): void => {
+  if (root) {
+    root.unmount();
+    root = null;
+  }
 };
 
 if (process.env.NODE_ENV === "development") {
@@ -22,4 +34,4 @@ if (process.env.NODE_ENV === "development") {
   }
 }
 
-export { mount };
+export { mount, unmount };

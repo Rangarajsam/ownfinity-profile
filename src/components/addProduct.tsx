@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { addProduct, setProductToEdit, editProduct } from '../store/slices/productSlice';
 import { CATEGORIES } from '../config/generalConfig';
+import { toast } from "react-hot-toast"
 
 interface Product { _id?:string, name: string; category: string; price: number; brand: string, description: string, stock: number, image?: File, images?: string[]; }
 
@@ -39,6 +40,7 @@ const AddProduct: React.FC<{ productToEdit: Product | null }> = ({ productToEdit
         e.preventDefault();
         try {
             await dispatch(addProduct(formData)).unwrap();
+            toast.success("Product added successfully!");
         }
         catch (error) {
             console.error("Error adding product:", error);
@@ -49,6 +51,7 @@ const AddProduct: React.FC<{ productToEdit: Product | null }> = ({ productToEdit
         e.preventDefault();
         try {
             await dispatch(editProduct({ ...formData, _id: productToEdit?._id })).unwrap();
+            toast.success("Product edited successfully!");
         } catch (error) {
             console.error("Error editing product:", error);
         }    
