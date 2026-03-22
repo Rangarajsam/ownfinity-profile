@@ -35,6 +35,7 @@ jobs:
       - name: Build project
         run: npm run build
         env:
+          NODE_ENV: production
           OWNFINITY_PROD_API_URL: https://ownfinity.rangarajexplore.in/
 
       - name: Upload build to S3

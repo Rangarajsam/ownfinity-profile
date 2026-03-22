@@ -1,6 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
+// Only load .env in development
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: '.env.development' });
+}
+
 module.exports = {
     module:{
         rules:[
