@@ -21,7 +21,18 @@ const prodConfig = {
                 container:`container@/container/latest/remoteEntry.js`
             },
             shared: {
-                ...packageJson.dependencies,
+                react: {
+                    singleton: true,
+                    requiredVersion: packageJson.dependencies.react,
+                },
+                'react-dom': {
+                    singleton: true,
+                    requiredVersion: packageJson.dependencies['react-dom'],
+                },
+                'react-router-dom': {
+                    singleton: true,
+                    requiredVersion: packageJson.dependencies['react-router-dom'],
+                },
                 mitt: { singleton: true, strictVersion: false, requiredVersion: false }
             }
         }),
