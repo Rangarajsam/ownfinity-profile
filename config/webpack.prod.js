@@ -5,6 +5,7 @@ const packageJson = require('../package.json');
 
 const prodConfig = {
   mode: 'production',
+  devtool: false,
   output: {
     filename: '[name].[contenthash].js',
     publicPath: '/profile/latest/',

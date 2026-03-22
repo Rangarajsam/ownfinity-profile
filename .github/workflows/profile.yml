@@ -34,9 +34,8 @@ jobs:
 
       - name: Build project
         run: npm run build
-
         env:
-          PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+          OWNFINITY_PROD_API_URL: https://ownfinity.rangarajexplore.in/
 
       - name: Upload build to S3
         run: |
