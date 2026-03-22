@@ -1,0 +1,49 @@
+name: deploy-profile
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+
+defaults:
+  run:
+    working-directory: .
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::029848631441:role/ownfinity-frontend-github-action
+          aws-region: ap-south-1
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+        env:
+          PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+
+      - name: Upload build to S3
+        run: |
+          aws s3 sync dist s3://ownfinity-frontend/profile/latest --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E3JPCC9S9GYKXM \
+            --paths "/profile/latest/remoteEntry.js"

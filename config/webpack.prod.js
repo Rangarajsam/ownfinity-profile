@@ -2,7 +2,6 @@ const { merge } = require('webpack-merge');
 const commonConfig = require('./webpack.common');
 const {ModuleFederationPlugin} = require('webpack').container;
 const packageJson = require('../package.json');
-const domain = process.env.PRODUCTION_DOMAIN;
 
 const prodConfig = {
   mode: 'production',
@@ -17,8 +16,8 @@ const prodConfig = {
             exposes: {
                 './ProfileApp': './src/bootstrap',
             },
-            remotes: {
-                container: `container@${domain}/container/latest/remoteEntry.js`
+            remotes:{
+                container:`container@/container/latest/remoteEntry.js`
             },
             shared: {
                 ...packageJson.dependencies,
